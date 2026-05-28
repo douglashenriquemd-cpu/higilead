@@ -521,7 +521,7 @@ document.querySelectorAll('.fade').forEach(el=>io.observe(el));
     document.getElementById('t-time').textContent='⏱ '+tempo;
     toast.classList.add('show');
     idx++;
-    setTimeout(()=>toast.classList.remove('show'),5000);
+    setTimeout(()=>toast.classList.remove('show'),8000);
   }
   setTimeout(showToast,3000);
   setInterval(showToast,30000);
