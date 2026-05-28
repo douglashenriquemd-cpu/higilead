@@ -1,38 +1,531 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Higilead</title>
-  <link rel="stylesheet" href="style.css" />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HigiLead — Clientes de Higienização na Sua Agenda</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Nunito:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#080b14;--surface:#0e1220;--surface2:#141827;
+  --blue:#1646f5;--blue2:#3b82f6;--teal:#00c9a7;
+  --amber:#f59e0b;--red:#ef4444;--green:#16a34a;
+  --white:#fff;--text:#e8eaf0;--muted:#6b7280;
+  --border:rgba(255,255,255,.07);
+}
+html{scroll-behavior:smooth}
+body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);overflow-x:hidden;line-height:1.6}
+nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:16px 0;border-bottom:1px solid var(--border);backdrop-filter:blur(20px);background:rgba(8,11,20,.85)}
+.nav-inner{max-width:1100px;margin:0 auto;padding:0 32px;display:flex;align-items:center;justify-content:space-between}
+.logo{font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:1.2rem;color:var(--white)}
+.logo span{color:var(--teal)}
+.nav-btn{background:var(--blue);color:#fff;padding:10px 24px;border-radius:8px;font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;font-size:.84rem;text-decoration:none;transition:all .2s}
+.nav-btn:hover{background:var(--blue2);transform:translateY(-1px)}
+.wrap{max-width:1100px;margin:0 auto;padding:0 32px}
+.hero{min-height:100vh;display:flex;align-items:center;padding:120px 0 80px;position:relative;overflow:hidden}
+.hero-glow{position:absolute;top:-200px;left:50%;transform:translateX(-50%);width:900px;height:700px;background:radial-gradient(ellipse,rgba(22,70,245,.12) 0%,transparent 65%);pointer-events:none}
+.hero-inner{display:grid;grid-template-columns:1fr 1fr;gap:72px;align-items:center;position:relative;z-index:1}
+.hero-eyebrow{display:inline-flex;align-items:center;gap:8px;background:rgba(0,201,167,.1);border:1px solid rgba(0,201,167,.2);color:var(--teal);padding:6px 14px;border-radius:100px;font-size:.72rem;font-weight:700;letter-spacing:.8px;text-transform:uppercase;margin-bottom:24px}
+.hero-eyebrow::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--teal);animation:blink 2s infinite}
+@keyframes blink{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.3;transform:scale(1.6)}}
+h1{font-family:'Plus Jakarta Sans',sans-serif;font-size:clamp(2.4rem,4vw,3.4rem);font-weight:800;line-height:1.06;letter-spacing:-1.8px;color:var(--white);margin-bottom:20px}
+h1 .hl{color:var(--teal)}
+.hero-sub{font-size:1rem;color:rgba(255,255,255,.5);line-height:1.8;margin-bottom:36px;max-width:480px}
+.hero-sub strong{color:var(--white)}
+.cta-box{background:var(--surface);border:1px solid rgba(255,255,255,.1);border-radius:20px;padding:32px;position:relative;overflow:hidden}
+.cta-box::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--blue),var(--teal))}
+.cta-title{font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:1.1rem;color:var(--white);margin-bottom:6px}
+.cta-sub{font-size:.8rem;color:var(--muted);margin-bottom:20px}
+.form-field{margin-bottom:12px}
+.form-field input,.form-field select{width:100%;background:var(--surface2);border:1px solid rgba(255,255,255,.1);border-radius:10px;padding:12px 16px;font-size:.88rem;color:var(--white);font-family:'Nunito',sans-serif;outline:none;transition:border-color .2s}
+.form-field input:focus,.form-field select:focus{border-color:var(--blue)}
+.form-field input::placeholder{color:var(--muted)}
+.form-field select option{background:var(--surface2);color:var(--white)}
+.btn-cta{width:100%;background:var(--blue);color:#fff;border:none;border-radius:12px;padding:15px;font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:1rem;cursor:pointer;transition:all .2s;box-shadow:0 8px 28px rgba(22,70,245,.35);margin-top:4px}
+.btn-cta:hover{background:var(--blue2);transform:translateY(-1px)}
+.cta-trust{display:flex;align-items:center;justify-content:center;gap:16px;margin-top:14px;flex-wrap:wrap}
+.cta-trust-item{font-size:.72rem;color:var(--muted);display:flex;align-items:center;gap:4px}
+.cta-trust-item span{color:var(--teal)}
+.urgency-bar{background:rgba(22,70,245,.15);border-top:1px solid rgba(22,70,245,.25);border-bottom:1px solid rgba(22,70,245,.25);padding:12px 0;text-align:center;font-size:.82rem;color:rgba(255,255,255,.7)}
+.urgency-bar strong{color:var(--teal)}
+section{padding:88px 0;position:relative;z-index:1}
+.sec-label{font-size:.7rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--teal);margin-bottom:10px;display:block}
+h2{font-family:'Plus Jakarta Sans',sans-serif;font-size:clamp(1.8rem,3vw,2.5rem);font-weight:800;letter-spacing:-1.2px;line-height:1.1;color:var(--white);margin-bottom:14px}
+.sec-sub{color:rgba(255,255,255,.45);font-size:.95rem;line-height:1.75;max-width:520px}
+.sec-head{margin-bottom:52px}
+/* BENEFÍCIOS */
+.ben-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.ben-card{background:var(--surface);border:1px solid rgba(0,201,167,.15);border-radius:16px;padding:28px 24px;transition:all .25s}
+.ben-card:hover{border-color:rgba(0,201,167,.35);transform:translateY(-3px)}
+.ben-icon{font-size:2.2rem;margin-bottom:14px;display:block}
+.ben-title{font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;font-size:.95rem;color:var(--white);margin-bottom:8px}
+.ben-text{font-size:.82rem;color:var(--muted);line-height:1.65}
+/* STEPS */
+.steps-wrap{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:center}
+.step-list{display:flex;flex-direction:column;gap:0}
+.step{display:flex;gap:18px;align-items:flex-start}
+.step-left{display:flex;flex-direction:column;align-items:center}
+.step-num{width:44px;height:44px;border-radius:50%;background:var(--blue);color:#fff;font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:.88rem;display:flex;align-items:center;justify-content:center;flex-shrink:0;z-index:1}
+.step-line{width:2px;flex:1;min-height:28px;background:rgba(22,70,245,.2);margin:4px 0}
+.step-body{padding-bottom:32px;flex:1}
+.step-title{font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;font-size:.95rem;color:var(--white);margin-bottom:5px}
+.step-desc{font-size:.82rem;color:var(--muted);line-height:1.65}
+/* PAINEL MOCKUP */
+.painel-mock{background:var(--surface);border:1px solid var(--border);border-radius:20px;overflow:hidden}
+.painel-bar{background:var(--surface2);padding:12px 16px;display:flex;align-items:center;gap:8px;border-bottom:1px solid var(--border)}
+.pb-dot{width:9px;height:9px;border-radius:50%}
+.pb-title{font-size:.7rem;color:rgba(255,255,255,.35);margin-left:8px}
+.painel-body{padding:18px}
+.painel-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:16px}
+.ps{background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:12px}
+.ps-val{font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:1.2rem}
+.ps-lbl{font-size:.66rem;color:var(--muted);margin-top:2px}
+.lead-card{background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:14px;margin-bottom:10px;display:flex;justify-content:space-between;align-items:flex-start;transition:border-color .2s}
+.lead-card:hover{border-color:rgba(22,70,245,.4)}
+.lc-tag{font-size:.6rem;font-weight:700;text-transform:uppercase;padding:3px 8px;border-radius:100px;margin-bottom:7px;display:inline-block;background:rgba(0,201,167,.14);color:var(--teal)}
+.lc-item{font-size:.84rem;color:var(--white);font-weight:600;margin-bottom:3px}
+.lc-meta{font-size:.7rem;color:var(--muted)}
+.lc-earn{font-size:.7rem;color:var(--teal);margin-top:4px}
+.lc-btn{background:var(--blue);color:#fff;border:none;border-radius:8px;padding:9px 13px;font-size:.72rem;font-weight:700;cursor:pointer;white-space:nowrap;line-height:1.4;font-family:'Plus Jakarta Sans',sans-serif}
+/* PROMESSA */
+.promessa-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
+.prom-item{display:flex;align-items:flex-start;gap:14px;background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:20px}
+.prom-icon{font-size:1.6rem;flex-shrink:0;margin-top:2px}
+.prom-title{font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;font-size:.9rem;color:var(--white);margin-bottom:4px}
+.prom-text{font-size:.8rem;color:var(--muted);line-height:1.6}
+/* DEPOIMENTOS */
+.dep-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.dep-card{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:24px;transition:border-color .2s}
+.dep-card:hover{border-color:rgba(22,70,245,.3)}
+.dep-stars{color:var(--amber);font-size:.88rem;margin-bottom:12px}
+.dep-text{font-size:.84rem;color:rgba(255,255,255,.6);line-height:1.7;margin-bottom:16px;font-style:italic}
+.dep-name{font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;font-size:.84rem;color:var(--white)}
+.dep-city{font-size:.72rem;color:var(--muted)}
+/* FAQ */
+.faq-list{display:flex;flex-direction:column;gap:10px}
+.faq-item{background:var(--surface);border:1px solid var(--border);border-radius:14px;overflow:hidden}
+.faq-item.open{border-color:rgba(22,70,245,.3)}
+.faq-q{padding:18px 22px;cursor:pointer;display:flex;justify-content:space-between;align-items:center;font-family:'Plus Jakarta Sans',sans-serif;font-weight:600;font-size:.9rem;color:var(--white);user-select:none}
+.faq-arr{font-size:.78rem;color:var(--muted);transition:transform .25s}
+.faq-item.open .faq-arr{transform:rotate(180deg)}
+.faq-a{padding:0 22px 18px;font-size:.84rem;color:var(--muted);line-height:1.7;display:none}
+.faq-item.open .faq-a{display:block}
+/* CTA FINAL */
+.cta-final{background:linear-gradient(135deg,rgba(22,70,245,.12),rgba(0,201,167,.06));border:1px solid rgba(22,70,245,.2);border-radius:28px;padding:72px 56px;text-align:center;position:relative;overflow:hidden}
+.cta-final::before{content:'';position:absolute;top:-80px;left:50%;transform:translateX(-50%);width:500px;height:400px;background:radial-gradient(circle,rgba(22,70,245,.12) 0%,transparent 70%)}
+.cta-final h2{font-size:clamp(2rem,3.5vw,2.8rem);margin-bottom:14px}
+.cta-final p{font-size:.95rem;color:rgba(255,255,255,.45);max-width:460px;margin:0 auto 36px;line-height:1.75}
+.btn-final{display:inline-flex;align-items:center;gap:10px;background:var(--blue);color:#fff;padding:16px 36px;border-radius:12px;font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:1rem;text-decoration:none;transition:all .25s;box-shadow:0 8px 32px rgba(22,70,245,.35)}
+.btn-final:hover{background:var(--blue2);transform:translateY(-2px)}
+.final-trust{display:flex;align-items:center;justify-content:center;gap:24px;margin-top:18px;flex-wrap:wrap}
+.ft-item{font-size:.78rem;color:var(--muted);display:flex;align-items:center;gap:5px}
+.ft-item span{color:var(--teal)}
+footer{border-top:1px solid var(--border);padding:32px 0;text-align:center;font-size:.78rem;color:var(--muted)}
+footer strong{color:rgba(255,255,255,.6)}
+footer a{color:var(--muted);text-decoration:none;margin:0 10px}
+.fade{opacity:0;transform:translateY(20px);transition:opacity .6s ease,transform .6s ease}
+.fade.on{opacity:1;transform:translateY(0)}
+/* TOAST */
+.toast{position:fixed;bottom:24px;left:24px;z-index:9999;background:var(--surface);border:1px solid rgba(0,201,167,.3);border-radius:16px;padding:14px 16px;display:flex;align-items:flex-start;gap:12px;max-width:290px;box-shadow:0 12px 40px rgba(0,0,0,.5);transform:translateY(120px);opacity:0;transition:transform .45s cubic-bezier(.34,1.4,.64,1),opacity .35s ease;pointer-events:none}
+.toast.show{transform:translateY(0);opacity:1}
+.toast-icon{font-size:1.5rem;flex-shrink:0;margin-top:1px}
+.toast-label{font-size:.58rem;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--teal);margin-bottom:5px}
+.toast-name{font-family:'Plus Jakarta Sans',sans-serif;font-size:.83rem;font-weight:700;color:var(--white);margin-bottom:3px}
+.toast-service{font-size:.75rem;color:rgba(255,255,255,.55);line-height:1.5}
+.toast-time{font-size:.64rem;color:var(--muted);margin-top:5px}
+@media(max-width:900px){
+  .wrap{padding:0 20px}
+  .hero-inner,.steps-wrap,.promessa-grid{grid-template-columns:1fr}
+  .ben-grid,.dep-grid{grid-template-columns:1fr 1fr}
+  .hero{padding:100px 0 60px}
+  .cta-final{padding:48px 24px}
+  nav .nav-inner{padding:0 20px}
+}
+@media(max-width:500px){.ben-grid,.dep-grid{grid-template-columns:1fr}}
+</style>
 </head>
 <body>
-  <header>
-    <nav>
-      <div class="logo">Higilead</div>
-      <a href="#contato" class="btn-nav">Falar com especialista</a>
-    </nav>
-  </header>
 
-  <main>
-    <section class="hero">
-      <h1>Transforme seus leads em clientes</h1>
-      <p>Solução completa para gestão e qualificação de leads com inteligência.</p>
-      <a href="#contato" class="btn-primary">Quero saber mais</a>
-    </section>
+<nav>
+  <div class="nav-inner">
+    <div class="logo">Higi<span>Lead</span></div>
+    <a href="#cadastro" class="nav-btn">Cadastro gratuito →</a>
+  </div>
+</nav>
 
-    <section id="contato" class="contato">
-      <h2>Fale conosco</h2>
-      <form>
-        <input type="text" placeholder="Seu nome" required />
-        <input type="email" placeholder="Seu e-mail" required />
-        <button type="submit">Enviar</button>
-      </form>
-    </section>
-  </main>
+<div class="urgency-bar" style="margin-top:61px">
+  🔥 Tem cliente esperando higienizador em São Paulo agora — <strong>entre de graça e pegue o próximo</strong>
+</div>
 
-  <footer>
-    <p>&copy; 2025 Higilead. Todos os direitos reservados.</p>
-  </footer>
+<!-- HERO -->
+<section class="hero" style="padding-top:80px">
+  <div class="hero-glow"></div>
+  <div class="wrap" style="width:100%">
+    <div class="hero-inner">
+      <div class="fade">
+        <div class="hero-eyebrow">Para higienizadores de estofados em SP</div>
+        <h1>A parte difícil<br>a gente faz.<br>Você só <span class="hl">fatura.</span></h1>
+        <p class="hero-sub">
+          Captamos o cliente, qualificamos, descobrimos o que ele precisa higienizar — e entregamos o contato pronto pra você. <strong>Seu único trabalho é passar o orçamento e ir até a casa dele.</strong>
+        </p>
+        <div style="display:flex;flex-direction:column;gap:12px">
+          <a href="#cadastro" style="display:inline-flex;align-items:center;justify-content:center;gap:10px;background:var(--blue);color:#fff;padding:15px 32px;border-radius:12px;font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:.95rem;text-decoration:none;box-shadow:0 8px 28px rgba(22,70,245,.35);transition:all .2s;width:fit-content">
+            Quero receber clientes agora →
+          </a>
+          <div style="font-size:.76rem;color:var(--muted);display:flex;align-items:center;gap:6px">
+            ✅ <span style="color:var(--teal);font-weight:600">Cadastro 100% gratuito</span> · sem cartão · sem mensalidade
+          </div>
+        </div>
+        <div style="display:flex;gap:28px;margin-top:40px;padding-top:32px;border-top:1px solid var(--border)">
+          <div><div style="font-family:'Plus Jakarta Sans',sans-serif;font-size:1.4rem;font-weight:800;color:var(--teal)">Gratuito</div><div style="font-size:.75rem;color:var(--muted);margin-top:2px">para se cadastrar</div></div>
+          <div><div style="font-family:'Plus Jakarta Sans',sans-serif;font-size:1.4rem;font-weight:800;color:var(--teal)">Qualificado</div><div style="font-size:.75rem;color:var(--muted);margin-top:2px">cliente já quer o serviço</div></div>
+          <div><div style="font-family:'Plus Jakarta Sans',sans-serif;font-size:1.4rem;font-weight:800;color:var(--teal)">Exclusivo</div><div style="font-size:.75rem;color:var(--muted);margin-top:2px">primeiro que pagar leva</div></div>
+        </div>
+      </div>
+
+      <!-- FORM -->
+      <div class="cta-box fade" style="transition-delay:.15s" id="cadastro">
+        <div class="cta-title">Criar conta gratuita</div>
+        <div class="cta-sub">Leva 2 minutos. Sem cartão de crédito.</div>
+        <div class="form-field"><input type="text" placeholder="Seu nome completo"></div>
+        <div class="form-field"><input type="email" placeholder="Seu melhor email"></div>
+        <div class="form-field"><input type="tel" placeholder="WhatsApp com DDD"></div>
+        <div class="form-field">
+          <select>
+            <option value="" disabled selected>Sua região em SP</option>
+            <option>Zona Sul</option><option>Zona Norte</option>
+            <option>Zona Leste</option><option>Zona Oeste</option>
+            <option>Centro</option><option>ABC Paulista</option>
+            <option>Guarulhos</option><option>Osasco</option>
+          </select>
+        </div>
+        <div style="background:rgba(245,158,11,.08);border:1px solid rgba(245,158,11,.2);border-radius:10px;padding:12px 14px;margin-bottom:14px">
+          <div style="font-size:.7rem;color:#f59e0b;font-weight:700;margin-bottom:4px">⚠️ Importante</div>
+          <div style="font-size:.72rem;color:rgba(255,255,255,.5);line-height:1.6">Os leads são oportunidades de contato, não serviços garantidos. O fechamento depende da sua negociação com o cliente.</div>
+        </div>
+        <button class="btn-cta">Criar minha conta gratuita →</button>
+        <div class="cta-trust">
+          <div class="cta-trust-item"><span>✅</span> Sem cartão</div>
+          <div class="cta-trust-item"><span>✅</span> Sem mensalidade</div>
+          <div class="cta-trust-item"><span>🔒</span> Dados protegidos</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BENEFÍCIOS -->
+<section>
+  <div class="wrap">
+    <div class="sec-head fade" style="text-align:center">
+      <span class="sec-label">O que você ganha</span>
+      <h2>Tudo que era difícil<br>a gente resolve pra você</h2>
+      <p class="sec-sub" style="margin:0 auto">Você fez a parte mais difícil — aprender a higienizar bem. O resto é com a gente.</p>
+    </div>
+    <div class="ben-grid">
+      <div class="ben-card fade">
+        <span class="ben-icon">🎯</span>
+        <div class="ben-title">Cliente que já quer o serviço</div>
+        <div class="ben-text">Não é curioso. Não é lead frio. É alguém que preencheu um formulário pedindo orçamento de higienização. Ele quer contratar.</div>
+      </div>
+      <div class="ben-card fade" style="transition-delay:.1s">
+        <span class="ben-icon">📋</span>
+        <div class="ben-title">Você já sabe o que ele precisa</div>
+        <div class="ben-text">Antes de ligar você vê tudo — sofá, colchão, cadeiras, tapetes, quantidade, bairro. Chega na ligação já sabendo o que vai orçar.</div>
+      </div>
+      <div class="ben-card fade" style="transition-delay:.2s">
+        <span class="ben-icon">📅</span>
+        <div class="ben-title">Você controla a agenda</div>
+        <div class="ben-text">Semana cheia? Não pega lead. Semana vazia? Desbloqueia mais. Você decide quantos clientes quer por semana — sem depender de ninguém.</div>
+      </div>
+      <div class="ben-card fade" style="transition-delay:.3s">
+        <span class="ben-icon">💰</span>
+        <div class="ben-title">Dinheiro 100% no seu bolso</div>
+        <div class="ben-text">Não é parceria. Não é franquia. Você dá o preço que quiser. O que o cliente pagar vai direto para você — sem comissão, sem desconto.</div>
+      </div>
+      <div class="ben-card fade" style="transition-delay:.4s">
+        <span class="ben-icon">🔒</span>
+        <div class="ben-title">Lead exclusivo pra você</div>
+        <div class="ben-text">Primeiro higienizador que desbloquear, fica com o lead. Mais nenhum profissional vai ligar para o mesmo cliente da sua região.</div>
+      </div>
+      <div class="ben-card fade" style="transition-delay:.5s">
+        <span class="ben-icon">⚡</span>
+        <div class="ben-title">Contato na hora</div>
+        <div class="ben-text">Desbloqueou? Nome, telefone e botão direto pro WhatsApp do cliente aparecem na tela. Você liga na hora que quiser.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- COMO FUNCIONA -->
+<section style="background:rgba(255,255,255,.02)">
+  <div class="wrap">
+    <div class="sec-head fade">
+      <span class="sec-label">Como funciona</span>
+      <h2>Do cadastro ao<br>cliente na sua agenda</h2>
+      <p class="sec-sub">4 passos simples. A gente faz 3 — você só faz o último.</p>
+    </div>
+    <div class="steps-wrap">
+      <div class="step-list fade">
+        <div class="step">
+          <div class="step-left"><div class="step-num">1</div><div class="step-line"></div></div>
+          <div class="step-body">
+            <div class="step-title">🤝 A gente faz — Captação</div>
+            <div class="step-desc">A plataforma atrai clientes que precisam de higienização em São Paulo via anúncios e formulários.</div>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-left"><div class="step-num">2</div><div class="step-line"></div></div>
+          <div class="step-body">
+            <div class="step-title">🤝 A gente faz — Qualificação</div>
+            <div class="step-desc">Perguntamos o que precisa higienizar, onde mora e quando quer. Lead chega pronto e qualificado.</div>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-left"><div class="step-num">3</div><div class="step-line"></div></div>
+          <div class="step-body">
+            <div class="step-title">🔔 Você vê o lead no painel</div>
+            <div class="step-desc">Recebe notificação, entra no painel e vê tudo — itens, bairro e o valor estimado. Contato ainda oculto.</div>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-left"><div class="step-num">4</div></div>
+          <div class="step-body" style="padding-bottom:0">
+            <div class="step-title">✅ Você faz — Orça e fatura</div>
+            <div class="step-desc">Desbloqueia o contato, liga, passa o orçamento e vai até a casa do cliente faturar. Fim.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="painel-mock fade" style="transition-delay:.15s">
+        <div class="painel-bar">
+          <div class="pb-dot" style="background:#ff5f56"></div>
+          <div class="pb-dot" style="background:#ffbd2e"></div>
+          <div class="pb-dot" style="background:#27c93f"></div>
+          <span class="pb-title">Painel — Leads disponíveis</span>
+        </div>
+        <div class="painel-body">
+          <div class="painel-stats">
+            <div class="ps"><div class="ps-val" style="color:#6b9fff">4</div><div class="ps-lbl">novos hoje</div></div>
+            <div class="ps"><div class="ps-val">18</div><div class="ps-lbl">esse mês</div></div>
+            <div class="ps"><div class="ps-val" style="color:var(--teal)">R$44</div><div class="ps-lbl">média paga</div></div>
+          </div>
+          <div class="lead-card">
+            <div>
+              <div class="lc-tag">🔥 Novo · há 3 min</div>
+              <div class="lc-item">🛋️ Sofá 3 lug + 2 poltronas</div>
+              <div class="lc-meta">📍 Vila Madalena, SP · 📅 Essa semana</div>
+              <div class="lc-earn">💰 Você pode ganhar: R$350 a R$700</div>
+            </div>
+            <button class="lc-btn">Desbloquear<br><small style="opacity:.7;font-weight:400">ver contato</small></button>
+          </div>
+          <div class="lead-card">
+            <div>
+              <div class="lc-tag" style="background:rgba(245,158,11,.12);color:var(--amber)">⏰ há 52 min · -20%</div>
+              <div class="lc-item">🛏️ Colchão casal + 4 cadeiras</div>
+              <div class="lc-meta">📍 Moema, SP · 📅 Próxima semana</div>
+              <div class="lc-earn">💰 Você pode ganhar: R$280 a R$560</div>
+            </div>
+            <button class="lc-btn" style="background:var(--teal);color:var(--bg)">Desbloquear<br><small style="font-weight:400">com desconto</small></button>
+          </div>
+          <div style="background:rgba(0,201,167,.08);border:1px solid rgba(0,201,167,.2);border-radius:10px;padding:14px;margin-top:4px">
+            <div style="font-size:.65rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--teal);margin-bottom:10px">✓ Contato liberado</div>
+            <div style="font-size:.82rem;color:var(--white);font-weight:600;margin-bottom:3px">Maria Aparecida Santos</div>
+            <div style="font-size:.78rem;color:rgba(255,255,255,.5);margin-bottom:10px">(11) 99234-5678 · Sofá 3 lug + 2 poltronas</div>
+            <div style="background:#25D366;border:none;border-radius:8px;padding:9px;color:#fff;font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;font-size:.8rem;text-align:center">💬 Falar com Maria no WhatsApp</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROMESSA -->
+<section>
+  <div class="wrap">
+    <div class="sec-head fade">
+      <span class="sec-label">Nossa promessa</span>
+      <h2>Você não precisa<br>entender de marketing.</h2>
+      <p class="sec-sub">A HigiLead existe para resolver a parte que não é sua especialidade. Sua especialidade é higienizar — a nossa é trazer o cliente até você.</p>
+    </div>
+    <div class="promessa-grid fade">
+      <div class="prom-item">
+        <div class="prom-icon">🚫</div>
+        <div>
+          <div class="prom-title">Não precisa saber de anúncio</div>
+          <div class="prom-text">A captação de cliente é 100% com a gente. Você nunca vai precisar criar um anúncio ou entender de tráfego.</div>
+        </div>
+      </div>
+      <div class="prom-item">
+        <div class="prom-icon">🚫</div>
+        <div>
+          <div class="prom-title">Não é parceria nem franquia</div>
+          <div class="prom-text">Você não divide o faturamento com ninguém. O dinheiro do serviço vai 100% para o seu bolso.</div>
+        </div>
+      </div>
+      <div class="prom-item">
+        <div class="prom-icon">🚫</div>
+        <div>
+          <div class="prom-title">Não tem mensalidade</div>
+          <div class="prom-text">Cadastro gratuito. Você paga só quando quiser desbloquear um lead. Mês que não usa, não paga nada.</div>
+        </div>
+      </div>
+      <div class="prom-item">
+        <div class="prom-icon">✅</div>
+        <div>
+          <div class="prom-title">Seu único trabalho</div>
+          <div class="prom-text">Passar o orçamento e ir até a casa do cliente higienizar. É isso. A gente faz todo o resto.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DEPOIMENTOS -->
+<section style="background:rgba(255,255,255,.02)">
+  <div class="wrap">
+    <div class="sec-head fade">
+      <span class="sec-label">Depoimentos</span>
+      <h2>Quem já usa<br>a HigiLead</h2>
+    </div>
+    <div class="dep-grid">
+      <div class="dep-card fade">
+        <div class="dep-stars">★★★★★</div>
+        <div class="dep-text">"Antes eu ficava o mês inteiro esperando indicação. Agora eu escolho quantos clientes quero na semana. Semana passada fechei 4 serviços só com leads da plataforma."</div>
+        <div class="dep-name">Ricardo S.</div>
+        <div class="dep-city">Higienizador · Zona Sul, SP</div>
+      </div>
+      <div class="dep-card fade" style="transition-delay:.1s">
+        <div class="dep-stars">★★★★★</div>
+        <div class="dep-text">"O melhor é que quando eu ligo, o cliente já sabe o que quer. Não preciso explicar nada. Apresento o preço e ele já fecha. Nunca foi tão fácil."</div>
+        <div class="dep-name">Ana Paula M.</div>
+        <div class="dep-city">Higienizadora · Moema, SP</div>
+      </div>
+      <div class="dep-card fade" style="transition-delay:.2s">
+        <div class="dep-stars">★★★★★</div>
+        <div class="dep-text">"Eu já sabia higienizar bem. O problema era sempre achar cliente. Com a HigiLead isso acabou. Agora minha agenda tá sempre cheia e eu decido quando trabalhar."</div>
+        <div class="dep-name">Marcos C.</div>
+        <div class="dep-city">Higienizador · ABC Paulista, SP</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section>
+  <div class="wrap">
+    <div class="sec-head fade">
+      <span class="sec-label">Dúvidas</span>
+      <h2>Perguntas que<br>todo mundo faz</h2>
+    </div>
+    <div class="faq-list fade">
+      <div class="faq-item">
+        <div class="faq-q">É parceria ou franquia? <span class="faq-arr">▼</span></div>
+        <div class="faq-a">Não. A HigiLead não é parceria e não é franquia. Você paga pelo contato do cliente, faz o serviço e o dinheiro vai 100% para o seu bolso. Nenhuma comissão, nenhum desconto.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">O cadastro é gratuito de verdade? <span class="faq-arr">▼</span></div>
+        <div class="faq-a">Sim. 100% gratuito, sem cartão de crédito e sem mensalidade. Você só paga quando decidir desbloquear um lead e ver o contato do cliente.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">Como funciona o desbloqueio? <span class="faq-arr">▼</span></div>
+        <div class="faq-a">Você vê o lead no painel com os itens que o cliente precisa higienizar, o bairro e o valor estimado do serviço. Se quiser o contato, paga o valor do lead (cartão ou Pix) e o nome e telefone aparecem na hora.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">O lead garante que vou fechar o serviço? <span class="faq-arr">▼</span></div>
+        <div class="faq-a">Não. O lead é um cliente que pediu orçamento e quer receber o contato de um profissional. O fechamento depende da sua abordagem e negociação — como em qualquer cliente novo.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">Outro higienizador pode pegar o mesmo lead? <span class="faq-arr">▼</span></div>
+        <div class="faq-a">Não. Assim que você desbloqueia, o lead fica indisponível para todos os outros higienizadores. O contato é exclusivamente seu.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA FINAL -->
+<section style="padding-bottom:80px">
+  <div class="wrap">
+    <div class="cta-final fade">
+      <span class="sec-label" style="display:block;text-align:center;margin-bottom:10px">Comece agora</span>
+      <h2>Você já sabe higienizar.<br>A gente traz o cliente.</h2>
+      <p>Cadastre-se grátis agora e comece a receber leads qualificados de higienização na sua região.</p>
+      <a href="#cadastro" class="btn-final">Criar minha conta gratuita →</a>
+      <div class="final-trust">
+        <div class="ft-item"><span>✅</span> Sem cartão de crédito</div>
+        <div class="ft-item"><span>✅</span> Cadastro em 2 minutos</div>
+        <div class="ft-item"><span>✅</span> Sem mensalidade</div>
+        <div class="ft-item"><span>✅</span> Não é parceria nem franquia</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <strong>HigiLead</strong> · contato@higielead.com.br<br>
+    <span style="margin-top:8px;display:block">
+      <a href="#">Termos de Uso</a>
+      <a href="#">Política de Privacidade</a>
+    </span>
+  </div>
+</footer>
+
+<script>
+document.querySelectorAll('.faq-q').forEach(q=>{
+  q.addEventListener('click',()=>{
+    const item=q.parentElement;
+    const was=item.classList.contains('open');
+    document.querySelectorAll('.faq-item').forEach(i=>i.classList.remove('open'));
+    if(!was)item.classList.add('open');
+  });
+});
+const io=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(!e.isIntersecting)return;
+    e.target.classList.add('on');
+    e.target.querySelectorAll('.ben-card,.dep-card,.step,.prom-item').forEach((k,i)=>{
+      k.style.opacity='0';k.style.transform='translateY(16px)';
+      setTimeout(()=>{k.style.transition='opacity .5s ease,transform .5s ease';k.style.opacity='1';k.style.transform='translateY(0)'},i*80+60);
+    });
+  });
+},{threshold:.07});
+document.querySelectorAll('.fade').forEach(el=>io.observe(el));
+
+// TOAST NOTIFICATIONS
+(function(){
+  const nomes=['Carlos','Ana Paula','Roberto','Fernanda','Marcos','Juliana','André','Patrícia','Ricardo','Camila','João','Mariana','Lucas','Beatriz','Rafael','Thiago','Priscila','Eduardo','Vanessa','Diego'];
+  const bairros=['Vila Madalena','Moema','Pinheiros','Itaim Bibi','Santana','Lapa','Tatuapé','Perdizes','Campo Belo','Brooklin','Vila Prudente','Santo André','Guarulhos','Osasco','São Bernardo','Ipiranga','Butantã','Jabaquara','Penha','Bela Vista'];
+  const servicos=['2 sofás + impermeabilização','Sofá 3 lug + impermeabilização','Colchão casal + 4 cadeiras','Sofá retrátil + poltrona','2 sofás + tapete grande','Colchão + sofá 2 lugares','Impermeabilização sofá 4 lug','3 colchões + sofá','Sofá em L + impermeabilização','2 poltronas + colchão'];
+  const tempos=['agora mesmo','há 1 min','há 2 min','há 3 min','há 5 min'];
+
+  let locationCity=null;
+  fetch('https://ipapi.co/json/').then(r=>r.json()).then(d=>{
+    if(d.region==='São Paulo'&&d.city)locationCity=d.city;
+  }).catch(()=>{});
+
+  const toast=document.createElement('div');
+  toast.className='toast';
+  toast.innerHTML=`<div class="toast-icon">🔔</div><div class="toast-content"><div class="toast-label">Novo pedido · SP</div><div class="toast-name" id="t-name"></div><div class="toast-service" id="t-service"></div><div class="toast-time" id="t-time"></div></div>`;
+  document.body.appendChild(toast);
+
+  let idx=0;
+  function showToast(){
+    const nome=nomes[Math.floor(Math.random()*nomes.length)];
+    const bairro=locationCity||bairros[idx%bairros.length];
+    const servico=servicos[idx%servicos.length];
+    const tempo=tempos[Math.floor(Math.random()*tempos.length)];
+    document.getElementById('t-name').textContent=nome+' · '+bairro+', SP';
+    document.getElementById('t-service').textContent='🛋️ '+servico;
+    document.getElementById('t-time').textContent='⏱ '+tempo;
+    toast.classList.add('show');
+    idx++;
+    setTimeout(()=>toast.classList.remove('show'),5000);
+  }
+  setTimeout(showToast,3000);
+  setInterval(showToast,30000);
+})();
+</script>
 </body>
 </html>
