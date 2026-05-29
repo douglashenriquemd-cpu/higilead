@@ -510,6 +510,19 @@ document.querySelectorAll('.fade').forEach(el=>io.observe(el));
   const servicos=['2 sofás + impermeabilização','Sofá 3 lug + impermeabilização','Colchão casal + 4 cadeiras','Sofá retrátil + poltrona','2 sofás + tapete grande','Colchão + sofá 2 lugares','Impermeabilização sofá 4 lug','3 colchões + sofá','Sofá em L + impermeabilização','2 poltronas + colchão'];
   const tempos=['agora mesmo','há 1 min','há 2 min','há 3 min','há 5 min'];
 
+  function shuffle(arr){
+    const a=[...arr];
+    for(let i=a.length-1;i>0;i--){
+      const j=Math.floor(Math.random()*(i+1));
+      [a[i],a[j]]=[a[j],a[i]];
+    }
+    return a;
+  }
+
+  const nomesList=shuffle(nomes);
+  const bairrosList=shuffle(bairros);
+  const servicosList=shuffle(servicos);
+
   let locationCity=null;
   fetch('https://ipapi.co/json/').then(r=>r.json()).then(d=>{
     if(d.region==='São Paulo'&&d.city)locationCity=d.city;
@@ -520,11 +533,11 @@ document.querySelectorAll('.fade').forEach(el=>io.observe(el));
   toast.innerHTML=`<div class="toast-icon">🔔</div><div class="toast-content"><div class="toast-label">Novo pedido · SP</div><div class="toast-name" id="t-name"></div><div class="toast-service" id="t-service"></div><div class="toast-time" id="t-time"></div></div>`;
   document.body.appendChild(toast);
 
-  let idx=0;
+  let idx=Math.floor(Math.random()*nomesList.length);
   function showToast(){
-    const nome=nomes[Math.floor(Math.random()*nomes.length)];
-    const bairro=locationCity||bairros[idx%bairros.length];
-    const servico=servicos[idx%servicos.length];
+    const nome=nomesList[idx%nomesList.length];
+    const bairro=locationCity||bairrosList[idx%bairrosList.length];
+    const servico=servicosList[idx%servicosList.length];
     const tempo=tempos[Math.floor(Math.random()*tempos.length)];
     document.getElementById('t-name').textContent=nome+' · '+bairro+', SP';
     document.getElementById('t-service').textContent='🛋️ '+servico;
