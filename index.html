@@ -137,12 +137,32 @@ footer a{color:var(--muted);text-decoration:none;margin:0 10px}
 @media(max-width:900px){
   .wrap{padding:0 20px}
   .hero-inner,.steps-wrap,.promessa-grid{grid-template-columns:1fr}
+  .hero-inner{gap:40px}
   .ben-grid,.dep-grid{grid-template-columns:1fr 1fr}
   .hero{padding:100px 0 60px}
   .cta-final{padding:48px 24px}
   nav .nav-inner{padding:0 20px}
 }
-@media(max-width:500px){.ben-grid,.dep-grid{grid-template-columns:1fr}}
+@media(max-width:480px){
+  section{padding:60px 0}
+  .sec-head{margin-bottom:36px}
+  .urgency-bar{padding:10px 16px;font-size:.76rem}
+  .hero{padding:80px 0 36px}
+  .hero-inner{gap:28px}
+  h1{letter-spacing:-.5px}
+  .hero-sub{font-size:.92rem}
+  .hero-cta-btn{width:100% !important;text-align:center}
+  .hero-stats{flex-wrap:wrap;gap:14px;margin-top:28px !important}
+  .nav-btn{padding:8px 14px;font-size:.78rem}
+  .cta-box{padding:22px 16px}
+  .promessa-grid{grid-template-columns:1fr}
+  .ben-grid,.dep-grid{grid-template-columns:1fr}
+  .btn-final{width:100%;justify-content:center;padding:14px 20px;font-size:.92rem}
+  .cta-final{padding:36px 16px;border-radius:18px}
+  .final-trust{gap:10px}
+  .toast{left:12px;bottom:12px;max-width:calc(100vw - 24px)}
+  .cta-final h2{font-size:1.8rem}
+}
 </style>
 </head>
 <body>
@@ -169,15 +189,15 @@ footer a{color:var(--muted);text-decoration:none;margin:0 10px}
         <p class="hero-sub">
           Captamos o cliente, qualificamos, descobrimos o que ele precisa higienizar — e entregamos o contato pronto pra você. <strong>Seu único trabalho é passar o orçamento e ir até a casa dele.</strong>
         </p>
-        <div style="display:flex;flex-direction:column;gap:12px">
-          <a href="https://painel.higilead.com/cadastro" target="_blank" style="display:inline-flex;align-items:center;justify-content:center;gap:10px;background:var(--blue);color:#fff;padding:15px 32px;border-radius:12px;font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:.95rem;text-decoration:none;box-shadow:0 8px 28px rgba(22,70,245,.35);transition:all .2s;width:fit-content">
+        <div class="hero-cta-wrap" style="display:flex;flex-direction:column;gap:12px">
+          <a href="https://painel.higilead.com/cadastro" target="_blank" class="hero-cta-btn" style="display:inline-flex;align-items:center;justify-content:center;gap:10px;background:var(--blue);color:#fff;padding:15px 32px;border-radius:12px;font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:.95rem;text-decoration:none;box-shadow:0 8px 28px rgba(22,70,245,.35);transition:all .2s;width:fit-content">
             Quero receber clientes agora →
           </a>
           <div style="font-size:.76rem;color:var(--muted);display:flex;align-items:center;gap:6px">
             ✅ <span style="color:var(--teal);font-weight:600">Cadastro 100% gratuito</span> · sem cartão · sem mensalidade
           </div>
         </div>
-        <div style="display:flex;gap:28px;margin-top:40px;padding-top:32px;border-top:1px solid var(--border)">
+        <div class="hero-stats" style="display:flex;gap:28px;margin-top:40px;padding-top:32px;border-top:1px solid var(--border)">
           <div><div style="font-family:'Plus Jakarta Sans',sans-serif;font-size:1.4rem;font-weight:800;color:var(--teal)">Gratuito</div><div style="font-size:.75rem;color:var(--muted);margin-top:2px">para se cadastrar</div></div>
           <div><div style="font-family:'Plus Jakarta Sans',sans-serif;font-size:1.4rem;font-weight:800;color:var(--teal)">Qualificado</div><div style="font-size:.75rem;color:var(--muted);margin-top:2px">cliente já quer o serviço</div></div>
           <div><div style="font-family:'Plus Jakarta Sans',sans-serif;font-size:1.4rem;font-weight:800;color:var(--teal)">Exclusivo</div><div style="font-size:.75rem;color:var(--muted);margin-top:2px">primeiro que pagar leva</div></div>
