@@ -508,7 +508,6 @@ document.querySelectorAll('.fade').forEach(el=>io.observe(el));
   const nomes=['Carlos','Ana Paula','Roberto','Fernanda','Marcos','Juliana','André','Patrícia','Ricardo','Camila','João','Mariana','Lucas','Beatriz','Rafael','Thiago','Priscila','Eduardo','Vanessa','Diego'];
   const bairros=['Vila Madalena','Moema','Pinheiros','Itaim Bibi','Santana','Lapa','Tatuapé','Perdizes','Campo Belo','Brooklin','Vila Prudente','Santo André','Guarulhos','Osasco','São Bernardo','Ipiranga','Butantã','Jabaquara','Penha','Bela Vista'];
   const servicos=['2 sofás + impermeabilização','Sofá 3 lug + impermeabilização','Colchão casal + 4 cadeiras','Sofá retrátil + poltrona','2 sofás + tapete grande','Colchão + sofá 2 lugares','Impermeabilização sofá 4 lug','3 colchões + sofá','Sofá em L + impermeabilização','2 poltronas + colchão'];
-  const tempos=['agora mesmo','há 1 min','há 2 min','há 3 min','há 5 min'];
 
   function shuffle(arr){
     const a=[...arr];
@@ -538,10 +537,9 @@ document.querySelectorAll('.fade').forEach(el=>io.observe(el));
     const nome=nomesList[idx%nomesList.length];
     const bairro=locationCity||bairrosList[idx%bairrosList.length];
     const servico=servicosList[idx%servicosList.length];
-    const tempo=tempos[Math.floor(Math.random()*tempos.length)];
     document.getElementById('t-name').textContent=nome+' · '+bairro+', SP';
     document.getElementById('t-service').textContent='🛋️ '+servico;
-    document.getElementById('t-time').textContent='⏱ '+tempo;
+    document.getElementById('t-time').textContent='⏱ agora mesmo';
     toast.classList.add('show');
     idx++;
     setTimeout(()=>toast.classList.remove('show'),8000);
